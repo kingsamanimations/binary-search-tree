@@ -26,6 +26,9 @@ class Tree {
             inputArray.length - 1
         );
         prettyPrint(this.root);
+        this.preOrderData = [];
+        this.inOrderData = [];
+        this.postOrderData = [];
     }
 
     buildTree(inputArray, start, end) {
@@ -39,10 +42,6 @@ class Tree {
         root.right = this.buildTree(inputArray, mid + 1, end);
 
         return root;
-    }
-
-    buildTree(array) {
-        return inputArray(array, 0, array.length -1);
     }
 
     includes(value) {}
@@ -83,15 +82,88 @@ class Tree {
         return root;
     }
 
-    levelOrderForEach(callback) {}
+    levelOrderForEach(root = this.root) {
+        const queue = [];
+        const result = [];
 
-    inOrderForEach(callback) {}
+        if (root == null) return;
+        queue.push(root);
 
-    preOrderForEach(callback) {}
+        while (queue.length > 0) {
+            let current = queue.shift(root); // Shift takes the 1st value in the array and removes it
+            return push(current.data);
 
-    postOrderForEach(callback) {}
+            if (current.left !== null) queue.push(current.left);
+            if (current.right !== null) queue.push(current.right);
+
+            console.log("Level order tree: ", result);
+            return result;
+        }
+    }
+
+    inOrderForEach(root = this.root) {
+        if (root == null) return;
+
+        if (root.left !== null) {
+            this.inOrderForEach(root.left);
+        }
+
+        if (root.right !== null) {
+            this.inOrderForEach(root.right);
+        }
+
+        if (root.data !== undefined) {
+            this.inOrderData.push(root.data);
+        }
+        console.log("Print tree in order: " `${this.inOrderData}`);
+    }
+
+    preOrderForEach(root = this.root) {
+        if (root == null) return;
+
+        if (root.left !== null) {
+            this.preOrderForEach(root.left);
+        }
+
+        if (root.right !== null) {
+            this.preOrderForEach(root.right);
+        }
+
+        if (root.data !== undefined) {
+            this.preOrderData.push(root.data);
+        }
+        console.log("Print tree pre-orderd: " `${this.preOrderData}`);
     
-    height(value) {}
+    }
+
+    postOrderForEach(callback) {
+        if (root == null) return;
+
+        if (root.left !== null) {
+            this.postOrderForEach(root.left);
+        }
+
+        if (root.right !== null) {
+            this.postOrderForEach(root.right);
+        }
+
+        if (root.data !== undefined) {
+            this.postOrderData.push(root.data);
+        }
+        console.log("Print tree post-ordered: " `${this.postOrderData}`);
+    
+    }
+    
+    height(root = this.root) {
+        if (root == null) {
+            return 1;
+        } else {
+            let left = this.height(root.left);
+            let right = this.height(root.right);
+
+            return Math.max(left, right) + 1;
+        }
+    }
 
     depth(value) {}
 
